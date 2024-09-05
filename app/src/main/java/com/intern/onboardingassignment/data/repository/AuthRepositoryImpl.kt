@@ -33,6 +33,7 @@ class AuthRepositoryImpl(private val firebaseDataSource: FirebaseDataSource) : A
                             email = email,
                             uId = user.uid,
                         )
+
                         emit(value = SignUpResult.Success)
                     } catch (e: Exception) {
                         emit(SignUpResult.Failure("Failed to add user data: ${e.localizedMessage}"))

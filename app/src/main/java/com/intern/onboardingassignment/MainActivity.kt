@@ -13,7 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.intern.onboardingassignment.databinding.ActivityMainBinding
 import com.intern.onboardingassignment.presentation.view.LoginFragment
 import com.intern.onboardingassignment.presentation.view.MainPageFragment
-import com.intern.onboardingassignment.presentation.view.navigationToFragment
+import com.intern.onboardingassignment.presentation.view.addToFragment
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -48,8 +48,8 @@ class MainActivity : AppCompatActivity() {
                 viewModel.viewModelScope.launch {
                     viewModel.channel.collect { loginState ->
                         when (loginState) {
-                            MainAction.LoggedIn -> navigationToFragment(MainPageFragment())
-                            MainAction.NotLoggedIn -> navigationToFragment(LoginFragment())
+                            MainAction.LoggedIn -> addToFragment(MainPageFragment())
+                            MainAction.NotLoggedIn -> addToFragment(LoginFragment())
                         }
                     }
                 }

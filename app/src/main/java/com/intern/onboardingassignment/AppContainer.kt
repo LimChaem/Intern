@@ -39,41 +39,45 @@ class AppContainer {
 
     // container 초기화
     val signUpContainer: SignUpContainer by lazy {
-        SignUpContainer(signUpWithFirebaseUseCase = signUpWithFirebaseUseCase)
+        SignUpContainer(
+            signUpWithFirebaseUseCase = signUpWithFirebaseUseCase,
+            sessionManager = sessionManager,
+        )
     }
 
     val logInContainer: LogInContainer by lazy {
         LogInContainer(sessionManager = sessionManager)
     }
 
-    val mainContainer: MainContainer by lazy{
+    val mainContainer: MainContainer by lazy {
         MainContainer(sessionManager = sessionManager)
     }
 
 
-
     // container
     class SignUpContainer(
-        val signUpWithFirebaseUseCase: SignUpWithFirebaseUseCase
+        val signUpWithFirebaseUseCase: SignUpWithFirebaseUseCase,
+        val sessionManager: SessionManager,
     ) {
         val signUpFactory = SignUpViewmodelFactory(
-            signUpWithFirebaseUseCase = signUpWithFirebaseUseCase
+            signUpWithFirebaseUseCase = signUpWithFirebaseUseCase,
+            sessionManager = sessionManager,
         )
     }
 
     class LogInContainer(
-        val sessionManager: SessionManager
-    ){
+        val sessionManager: SessionManager,
+    ) {
         val loginViewModelFactory = LoginViewModelFactory(
-            sessionManager = sessionManager
+            sessionManager = sessionManager,
         )
     }
 
     class MainContainer(
-        val sessionManager: SessionManager
+        val sessionManager: SessionManager,
     ) {
         val mainPageViewModelFactory = MainViewModelFactory(
-            sessionManager = sessionManager
+            sessionManager = sessionManager,
         )
     }
 

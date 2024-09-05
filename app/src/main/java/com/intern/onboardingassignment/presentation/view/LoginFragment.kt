@@ -54,14 +54,11 @@ class LoginFragment : Fragment(), View.OnClickListener {
         p0.let {
             when (it) {
                 binding.btnLogin -> {
-
+                    requireActivity().replaceToFragment(MainPageFragment())
                 }
 
                 binding.tvSignUp -> {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.frame, SignUpFragment())
-                        .addToBackStack(null)
-                        .commit()
+                    requireActivity().replaceToFragment(SignUpFragment())
                 }
 
                 else -> Unit

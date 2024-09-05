@@ -5,4 +5,5 @@ typealias FirebaseUId = String?
 interface SessionManager {
     suspend fun getAuthInformation(): FirebaseUId
     suspend fun login()
+    suspend fun logOut()
 }

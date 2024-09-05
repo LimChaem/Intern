@@ -10,6 +10,7 @@ import com.intern.onboardingassignment.databinding.FragmentMainPageBinding
 import com.intern.onboardingassignment.databinding.FragmentSignUpBinding
 
 class MainPageFragment : Fragment() {
+
     private var _binding: FragmentMainPageBinding? = null
     private val binding get() = _binding!!
 

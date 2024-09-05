@@ -10,6 +10,11 @@ class SessionManagerImpl(private val auth: FirebaseAuth) : SessionManager {
     }
 
     override suspend fun login() {
-        TODO("Not yet implemented")
+
     }
+
+    override suspend fun logOut() {
+        auth.signOut()
+    }
+
 }
