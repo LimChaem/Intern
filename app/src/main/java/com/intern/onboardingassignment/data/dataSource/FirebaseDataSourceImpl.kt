@@ -18,10 +18,6 @@ class FirebaseDataSourceImpl(
     private val auth: FirebaseAuth,
     private val db: FirebaseFirestore
 ) : FirebaseDataSource {
-    override suspend fun logInWithFirebase(email: String, password: String): Flow<Boolean> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun signUpWithFirebase(
         email: String,
         password: String
