@@ -7,9 +7,9 @@ import com.intern.onboardingassignment.data.repository.AuthRepositoryImpl
 import com.intern.onboardingassignment.data.session.SessionManagerImpl
 import com.intern.onboardingassignment.domain.session.SessionManager
 import com.intern.onboardingassignment.domain.usecase.SignUpWithFirebaseUseCase
-import com.intern.onboardingassignment.presentation.view.LoginViewModelFactory
-import com.intern.onboardingassignment.presentation.view.MainPageViewModelFactory
-import com.intern.onboardingassignment.presentation.view.SignUpViewmodelFactory
+import com.intern.onboardingassignment.presentation.MainViewModelFactory
+import com.intern.onboardingassignment.presentation.view.logIn.LoginViewModelFactory
+import com.intern.onboardingassignment.presentation.view.signUp.SignUpViewmodelFactory
 
 class AppContainer {
 

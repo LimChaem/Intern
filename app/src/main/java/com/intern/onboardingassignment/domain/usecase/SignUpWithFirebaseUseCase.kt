@@ -1,7 +1,7 @@
 package com.intern.onboardingassignment.domain.usecase
 
 import com.intern.onboardingassignment.domain.repository.AuthRepository
-import com.intern.onboardingassignment.domain.utill.SignUpResult
+import com.intern.onboardingassignment.domain.extention.SignUpResult
 import kotlinx.coroutines.flow.Flow
 
 class SignUpWithFirebaseUseCase(private val authRepository: AuthRepository) {

@@ -6,7 +6,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.intern.onboardingassignment.data.dataSource.FirebaseDataSource
 import com.intern.onboardingassignment.domain.repository.AuthRepository
-import com.intern.onboardingassignment.domain.utill.SignUpResult
+import com.intern.onboardingassignment.domain.extention.SignUpResult
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow

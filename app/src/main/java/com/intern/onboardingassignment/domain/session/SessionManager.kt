@@ -1,6 +1,6 @@
 package com.intern.onboardingassignment.domain.session
 
-import com.intern.onboardingassignment.domain.utill.LoginResult
+import com.intern.onboardingassignment.domain.extention.LoginResult
 import kotlinx.coroutines.flow.Flow
 
 typealias FirebaseUId = String?

@@ -1,6 +1,6 @@
 package com.intern.onboardingassignment.domain.repository
 
-import com.intern.onboardingassignment.domain.utill.SignUpResult
+import com.intern.onboardingassignment.domain.extention.SignUpResult
 import kotlinx.coroutines.flow.Flow
 
 

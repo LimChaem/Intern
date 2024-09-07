@@ -1,4 +1,4 @@
-package com.intern.onboardingassignment
+package com.intern.onboardingassignment.presentation
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -10,10 +10,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
+import com.intern.onboardingassignment.MyApp
 import com.intern.onboardingassignment.databinding.ActivityMainBinding
-import com.intern.onboardingassignment.presentation.view.LoginFragment
-import com.intern.onboardingassignment.presentation.view.MainPageFragment
-import com.intern.onboardingassignment.presentation.view.addToFragment
+import com.intern.onboardingassignment.presentation.view.logIn.LoginFragment
+import com.intern.onboardingassignment.presentation.view.main.MainPageFragment
+import com.intern.onboardingassignment.presentation.extention.addToFragment
+import com.intern.onboardingassignment.presentation.extention.replaceToFragment
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -48,8 +50,8 @@ class MainActivity : AppCompatActivity() {
                 viewModel.viewModelScope.launch {
                     viewModel.channel.collect { loginState ->
                         when (loginState) {
-                            MainAction.LoggedIn -> addToFragment(MainPageFragment())
-                            MainAction.NotLoggedIn -> addToFragment(LoginFragment())
+                            MainAction.LoggedIn -> replaceToFragment(MainPageFragment(),false)
+                            MainAction.NotLoggedIn -> replaceToFragment(LoginFragment(), true)
                         }
                     }
                 }

@@ -1,4 +1,4 @@
-package com.intern.onboardingassignment.presentation.view
+package com.intern.onboardingassignment.presentation.view.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

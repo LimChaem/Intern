@@ -1,4 +1,4 @@
-package com.intern.onboardingassignment.presentation.view
+package com.intern.onboardingassignment.presentation.view.main
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
