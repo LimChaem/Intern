@@ -125,6 +125,7 @@ as
         android:layout_marginEnd="60dp"
         android:background="@drawable/btn_radius_lilac"
         android:text="회원가입"
+        android:clickable="true"
         app:layout_constraintEnd_toEndOf="@id/et_password_check"
         app:layout_constraintStart_toStartOf="@id/et_password_check"
         app:layout_constraintTop_toBottomOf="@id/et_password_check" />

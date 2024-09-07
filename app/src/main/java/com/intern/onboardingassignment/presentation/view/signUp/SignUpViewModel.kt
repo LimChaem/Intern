@@ -1,8 +1,10 @@
 package com.intern.onboardingassignment.presentation.view.signUp
 
 import android.os.PatternMatcher
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -26,88 +28,106 @@ class SignUpViewModel(
     private val _emailValid = MutableLiveData<Boolean>()
     val emailValid = _emailValid
 
+    private val _emailValidUi = MutableLiveData<Boolean>()
+    val emailValidUi = _emailValidUi
+
     private val _nameValid = MutableLiveData<Boolean>()
     val nameValid = _nameValid
+
+    private val _nameValidUi = MutableLiveData<Boolean>()
+    val nameValidUi = _nameValidUi
 
     private val _passwordValid = MutableLiveData<Boolean>()
     val passwordValid = _passwordValid
 
+    private val _passwordValidUi = MutableLiveData<Boolean>()
+    val passwordValidUi = _passwordValidUi
+
     private val _confirmPasswordValid = MutableLiveData<Boolean>()
     val confirmPasswordValid = _confirmPasswordValid
 
-    private val _signUpInValid = MutableLiveData<Boolean>()
-    val signUpValid = _signUpInValid
+    private val _confirmPasswordValidUi = MutableLiveData<Boolean>()
+    val confirmPasswordValidUi = _confirmPasswordValidUi
+
+    private val _signUpValid = MutableLiveData<Boolean>(false)
+    val signUpValid = _signUpValid
 
 
-    fun checkName(name: EditText): Boolean {
+
+    fun checkName(name: EditText) {
         val nameText = name.text.toString()
         val namePattern = Pattern.matches("^[ㄱ-ㅣ가-힣a-zA-Z\\s]+$", nameText)
-        if (namePattern) {
-            _nameValid.value = true
-            return true
-        } else {
+        if (nameText.isEmpty()) {
             _nameValid.value = false
-            return false
+            _nameValidUi.value = true
+        } else {
+            _nameValid.value = namePattern
+            _nameValidUi.value = namePattern
         }
+        updateSignUpValid()
     }
 
-    fun checkEmail(email: EditText): Boolean {
+    fun checkEmail(email: EditText) {
         val emailText = email.text.toString()
         val emailPattern = android.util.Patterns.EMAIL_ADDRESS.matcher(emailText).matches()
-        if (emailPattern) {
-            _emailValid.value = true
-            return true
-        } else {
+        if (emailText.isEmpty()) {
             _emailValid.value = false
-            return false
+            _emailValidUi.value = true
+        } else {
+            _emailValid.value = emailPattern
+            _emailValidUi.value = emailPattern
         }
+        updateSignUpValid()
     }
 
-    fun checkPassword(password: EditText): Boolean {
+    fun checkPassword(password: EditText) {
         val passwordText = password.text.toString().trim()
         val passwordPattern = Pattern.matches(
-            "^(?=.*[A-Za-z])(?=.*\\\\d)(?=.*[@\$!%*?&])[A-Za-z\\\\d@\$!%*?&]{8,20}\$",
+            "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*?&])[A-Za-z\\d@\$!%*?&]{8,20}$",
             passwordText
         )
-        if (passwordPattern) {
-            _passwordValid.value = true
-            return true
-        } else {
+        if (passwordText.isEmpty()) {
             _passwordValid.value = false
-            return false
+            _passwordValidUi.value = true
+        } else {
+            _passwordValid.value = passwordPattern
+            _passwordValidUi.value = passwordPattern
         }
+
+        updateSignUpValid()
     }
 
-    fun checkConfirmPassword(password: EditText, confirmPassword: EditText): Boolean {
+    fun checkConfirmPassword(password: EditText, confirmPassword: EditText) {
         val passwordText = password.text.toString().trim()
         val confirmPasswordText = confirmPassword.text.toString()
 
-        if (passwordText == confirmPasswordText) {
-            _confirmPasswordValid.value = true
-            return true
-        } else {
+        if (passwordText.isEmpty()) {
             _confirmPasswordValid.value = false
-            return false
+            _confirmPasswordValidUi.value = true
+
+        } else {
+            _confirmPasswordValid.value = passwordText == confirmPasswordText
+            _confirmPasswordValidUi.value = passwordText == confirmPasswordText
+
         }
+        updateSignUpValid()
     }
 
     private fun nullCheck(text: String): Boolean {
         return text.isEmpty()
     }
 
-    fun nullCheckInputData(
-        email: EditText,
-        name: EditText,
-        password: EditText,
-        confirmPassword: EditText
-    ) {
-        if (nullCheck(email.text.toString()) || nullCheck(name.text.toString()) || nullCheck(
-                password.text.toString()
-            ) || nullCheck(confirmPassword.text.toString())
-        ) {
-            _signUpInValid.value = true
-        }
+    private fun updateSignUpValid() {
+        val allFieldsValid = (_nameValid.value == true &&
+                _emailValid.value == true &&
+                _passwordValid.value == true &&
+                _confirmPasswordValid.value == true)
+        _signUpValid.value = allFieldsValid
+
+        Log.d("allFieldValid", "$allFieldsValid"
+        )
     }
+
 
     fun signUp(name: String, email: String, password: String) {
         viewModelScope.launch {
@@ -146,7 +166,6 @@ class SignUpViewModel(
                 }
             }
         }
-
     }
 
 }

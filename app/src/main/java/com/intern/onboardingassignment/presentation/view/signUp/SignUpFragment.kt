@@ -86,17 +86,26 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     }
 
     private fun observeLiveData() {
-        viewModel.nameValid.observe(this, Observer { inValid ->
+        viewModel.nameValidUi.observe(this, Observer { inValid ->
             binding.tvNameCheck.isVisible = !inValid
         })
-        viewModel.emailValid.observe(this, Observer { inValid ->
+        viewModel.emailValidUi.observe(this, Observer { inValid ->
             binding.tvIdCheck.isVisible = !inValid
         })
-        viewModel.passwordValid.observe(this, Observer { inValid ->
+        viewModel.passwordValidUi.observe(this, Observer { inValid ->
             binding.tvPasswordCheck.isVisible = !inValid
         })
-        viewModel.confirmPasswordValid.observe(this, Observer { inValid ->
+        viewModel.confirmPasswordValidUi.observe(this, Observer { inValid ->
             binding.tvConfirmPasswordCheck.isVisible = !inValid
+        })
+
+        viewModel.signUpValid.observe(viewLifecycleOwner, Observer { inValid ->
+            binding.btnSignUp.isEnabled = inValid
+            if(inValid){
+                binding.btnSignUp.setBackgroundResource(R.drawable.btn_radius_lilac)
+            }else{
+                binding.btnSignUp.setBackgroundResource(R.drawable.btn_radius_false)
+            }
         })
 
     }
