@@ -13,5 +13,4 @@ interface FirebaseDataSource {
     suspend fun getCurrentUserData(): Flow<UserResponse>
     suspend fun accountDeletionWithFirebase(): Flow<Boolean>
 
-    suspend fun deleteUserData(uId: String)
 }

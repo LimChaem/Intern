@@ -88,28 +88,6 @@ class SignUpViewModel(
         updateSignUpValid()
     }
 
-    fun checkEmailDuplicate(email: EditText) {
-        val emailText = email.text.toString()
-        viewModelScope.launch {
-            checkEmailDuplicateUseCase.invoke(emailText).collect {
-                when (it) {
-                    is SuchEmailResult.Empty -> {
-                        _emailDuplicate.value = true
-                        _checkEmailDuplicate.send(CheckEmail.Empty)
-                    }
-                    is SuchEmailResult.Error -> {
-                        _emailDuplicate.value = false
-                        _checkEmailDuplicate.send(CheckEmail.Error("다시 시도 해 주세요."))
-                    }
-                    is SuchEmailResult.Exits -> {
-                        _emailDuplicate.value = false
-                        _checkEmailDuplicate.send(CheckEmail.Exists)
-                    }
-                }
-            }
-        }
-    }
-
     fun checkPassword(password: EditText) {
         val passwordText = password.text.toString().trim()
         val passwordPattern = Pattern.matches(

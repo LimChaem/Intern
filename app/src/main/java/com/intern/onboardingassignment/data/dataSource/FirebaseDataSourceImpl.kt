@@ -93,8 +93,4 @@ class FirebaseDataSourceImpl(
             emit(false)
         }
     }
-
-    override suspend fun deleteUserData(uId: String) {
-        TODO("Not yet implemented")
-    }
 }
