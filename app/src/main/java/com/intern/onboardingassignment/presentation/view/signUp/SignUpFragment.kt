@@ -152,7 +152,8 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                 binding.btnSignUp -> signUp()
                 binding.tvSignUp -> requireActivity().replaceToFragment(
                     frag = LoginFragment(),
-                    clearBackStack = true
+                    clearBackStack = false,
+                    addToBackStack = false
                 )
 
                 binding.ivSignHide -> {

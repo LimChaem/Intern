@@ -85,7 +85,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     requireActivity().replaceToFragment(
                         frag = SignUpFragment(),
                         clearBackStack = true,
-                        addToBackStack = true,
+                        addToBackStack = false,
                     )
                 }
             }

@@ -74,7 +74,8 @@ class MainActivity : AppCompatActivity() {
 
                         MainAction.NotLoggedIn -> replaceToFragment(
                             LoginFragment(),
-                            clearBackStack = true
+                            clearBackStack = true,
+                            addToBackStack = false
                         )
                     }
                 }
