@@ -48,6 +48,7 @@ class MainPageFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         collectFlows()
+        initView()
 
     }
 
@@ -84,38 +85,6 @@ class MainPageFragment : Fragment(), View.OnClickListener {
                     }
                 }
             }
-            viewModel.sessionEvent.collect { sessionEvent ->
-                when (sessionEvent) {
-                    is SessionEvent.LoggedIn -> {
-                        // 대기 상태
-                    }
-
-                    is SessionEvent.LoggedOut -> {
-                        requireActivity().replaceToFragment(
-                            LoginFragment(),
-                            clearBackStack = true,
-                            addToBackStack = false
-                        )
-                    }
-
-                    is SessionEvent.DeleteUserData -> {
-                        viewModel.logOut()
-                        requireActivity().replaceToFragment(
-                            LoginFragment(),
-                            clearBackStack = true,
-                            addToBackStack = false
-                        )
-                    }
-
-                    is SessionEvent.FailedDeleteData -> {
-                        Toast.makeText(
-                            requireContext(),
-                            "회원 탈퇴에 실패하였습니다. 다시 시도 해 주세요.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
         }
     }
 
@@ -133,7 +102,8 @@ class MainPageFragment : Fragment(), View.OnClickListener {
     }
 
     private fun initView() {
-
+        binding.btnLogOut.setOnClickListener(this)
+        binding.btnAccountDeletion.setOnClickListener(this)
     }
 
     override fun onDestroyView() {
@@ -144,8 +114,30 @@ class MainPageFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         v.let {
+            when (it) {
+                binding.btnLogOut -> {
+
+                    viewModel.logOut()
+                    requireActivity().replaceToFragment(
+                        LoginFragment(),
+                        clearBackStack = true,
+                        addToBackStack = false
+                    )
+                }
+
+                binding.btnAccountDeletion -> {
+
+                    viewModel.accountDeletion()
+                    requireActivity().replaceToFragment(
+                        LoginFragment(),
+                        clearBackStack = true,
+                        addToBackStack = false
+                    )
+                }
+
+                else -> {}
+            }
 
         }
     }
-
 }

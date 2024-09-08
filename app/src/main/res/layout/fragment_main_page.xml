@@ -11,31 +11,103 @@
         android:id="@+id/const_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible">
+        android:visibility="visible"
+        tools:layout_editor_absoluteX="-39dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <TextView
+            android:id="@+id/tv_Name_Tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="200dp"
+            android:text="이름: "
+            android:textSize="15sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_name"
+            app:layout_constraintEnd_toStartOf="@id/tv_name"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hello_blank_fragment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/tv_Name_Tag"
+            app:layout_constraintBottom_toBottomOf="@id/tv_Name_Tag" />
+
+        <TextView
+            android:id="@+id/tv_Email_Tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="E-Mail: "
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_email"
+            app:layout_constraintStart_toStartOf="@id/tv_Name_Tag"
+            app:layout_constraintTop_toBottomOf="@id/tv_Name_Tag" />
 
         <TextView
             android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hello_blank_fragment"
-            app:layout_constraintStart_toStartOf="@id/tv_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_name" />
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_Email_Tag"
+            app:layout_constraintStart_toEndOf="@id/tv_Email_Tag" />
+
+        <TextView
+            android:id="@+id/tv_CreatedAt_Tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="생성일: "
+            android:textSize="15sp"
+            app:layout_constraintEnd_toStartOf="@id/tv_createdAt"
+            app:layout_constraintStart_toStartOf="@id/tv_Email_Tag"
+            app:layout_constraintTop_toBottomOf="@id/tv_Email_Tag" />
 
         <TextView
             android:id="@+id/tv_createdAt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hello_blank_fragment"
-            app:layout_constraintStart_toStartOf="@id/tv_email"
-            app:layout_constraintTop_toBottomOf="@id/tv_email" />
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_CreatedAt_Tag"
+            app:layout_constraintStart_toEndOf="@id/tv_CreatedAt_Tag" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_logOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="로그아웃"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_Account_Deletion"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_CreatedAt_Tag" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_Account_Deletion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/btn_logOut"
+            app:layout_constraintTop_toTopOf="@id/btn_logOut"
+            android:text="회원탈퇴"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ProgressBar

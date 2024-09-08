@@ -22,41 +22,31 @@ class MainPageViewModel(
     private val _loadingState = MutableStateFlow<LoadingState>(LoadingState.Loading)
     val loadingState = _loadingState
 
-    private val _sessionEvent = MutableStateFlow<SessionEvent>(SessionEvent.LoggedIn)
-    val sessionEvent = _sessionEvent
-
-     suspend fun getCurrentUser() {
+    suspend fun getCurrentUser() {
         val currentUser = CurrentUser.userData
         if (currentUser == null) {
             getCurrentUserDataUseCase().catch { e ->
-                Log.d("getCurrentUser1", "UserEntity: $e")
                 _loadingState.value = LoadingState.Error(e)
             }.collect { userEntity ->
-                Log.d("getCurrentUser", "UserEntity: $userEntity")
                 val userModel = userEntity.toUserModel()
                 CurrentUser.userData = userModel
                 _loadingState.value = LoadingState.Success
             }
-        }else{
+        } else {
             _loadingState.value = LoadingState.Success
         }
     }
 
-    suspend fun logOut(){
-        sessionManager.logOut()
-        _sessionEvent.value = SessionEvent.LoggedOut
+    fun logOut() {
+        viewModelScope.launch {
+            sessionManager.logOut()
+        }
     }
 
-    fun accountDeletion(){
-       viewModelScope.launch {
-           accountDeletionUseCase.invoke().collect{success ->
-               if(success){
-                   _sessionEvent.value = SessionEvent.DeleteUserData
-               }else {
-                   _sessionEvent.value = SessionEvent.FailedDeleteData
-               }
-           }
-       }
+    fun accountDeletion() {
+        viewModelScope.launch {
+            accountDeletionUseCase.invoke().collect {}
+        }
     }
 }
 
@@ -64,14 +54,6 @@ sealed interface LoadingState {
     data object Loading : LoadingState
     data object Success : LoadingState
     data class Error(val error: Throwable) : LoadingState
-}
-
-sealed interface SessionEvent {
-
-    data object DeleteUserData: SessionEvent
-    data object FailedDeleteData: SessionEvent
-    data object LoggedOut: SessionEvent
-    data object LoggedIn: SessionEvent
 }
 
 class MainPageViewModelFactory(
