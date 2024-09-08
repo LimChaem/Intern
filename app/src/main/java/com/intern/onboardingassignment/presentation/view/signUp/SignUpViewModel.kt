@@ -12,6 +12,8 @@ import androidx.lifecycle.viewModelScope
 import com.intern.onboardingassignment.domain.session.SessionManager
 import com.intern.onboardingassignment.domain.usecase.SignUpWithFirebaseUseCase
 import com.intern.onboardingassignment.domain.extention.SignUpResult
+import com.intern.onboardingassignment.domain.extention.SuchEmailResult
+import com.intern.onboardingassignment.domain.usecase.CheckEmailDuplicateUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -20,16 +22,23 @@ import java.util.regex.Pattern
 class SignUpViewModel(
     private val signUpWithFirebaseUseCase: SignUpWithFirebaseUseCase,
     private val sessionManager: SessionManager,
+    private val checkEmailDuplicateUseCase: CheckEmailDuplicateUseCase,
 ) : ViewModel() {
 
     private val _channel = Channel<SignUpEvent> { }
     val channel = _channel.receiveAsFlow()
+
+    private val _checkEmailDuplicate = Channel<CheckEmail> { }
+    val checkEmailDuplicate = _checkEmailDuplicate.receiveAsFlow()
 
     private val _emailValid = MutableLiveData<Boolean>()
     val emailValid = _emailValid
 
     private val _emailValidUi = MutableLiveData<Boolean>()
     val emailValidUi = _emailValidUi
+
+    private val _emailDuplicate = MutableLiveData<Boolean>()
+    val emailDuplicate = _emailDuplicate
 
     private val _nameValid = MutableLiveData<Boolean>()
     val nameValid = _nameValid
@@ -51,7 +60,6 @@ class SignUpViewModel(
 
     private val _signUpValid = MutableLiveData<Boolean>(false)
     val signUpValid = _signUpValid
-
 
 
     fun checkName(name: EditText) {
@@ -78,6 +86,28 @@ class SignUpViewModel(
             _emailValidUi.value = emailPattern
         }
         updateSignUpValid()
+    }
+
+    fun checkEmailDuplicate(email: EditText) {
+        val emailText = email.text.toString()
+        viewModelScope.launch {
+            checkEmailDuplicateUseCase.invoke(emailText).collect {
+                when (it) {
+                    is SuchEmailResult.Empty -> {
+                        _emailDuplicate.value = true
+                        _checkEmailDuplicate.send(CheckEmail.Empty)
+                    }
+                    is SuchEmailResult.Error -> {
+                        _emailDuplicate.value = false
+                        _checkEmailDuplicate.send(CheckEmail.Error("다시 시도 해 주세요."))
+                    }
+                    is SuchEmailResult.Exits -> {
+                        _emailDuplicate.value = false
+                        _checkEmailDuplicate.send(CheckEmail.Exists)
+                    }
+                }
+            }
+        }
     }
 
     fun checkPassword(password: EditText) {
@@ -113,18 +143,15 @@ class SignUpViewModel(
         updateSignUpValid()
     }
 
-    private fun nullCheck(text: String): Boolean {
-        return text.isEmpty()
-    }
-
     private fun updateSignUpValid() {
-        val allFieldsValid = (_nameValid.value == true &&
-                _emailValid.value == true &&
-                _passwordValid.value == true &&
-                _confirmPasswordValid.value == true)
-        _signUpValid.value = allFieldsValid
+        val allFieldsValid = (nameValid.value == true &&
+                emailValid.value == true &&
+                passwordValid.value == true &&
+                confirmPasswordValid.value == true)
+        signUpValid.value = allFieldsValid
 
-        Log.d("allFieldValid", "$allFieldsValid"
+        Log.d(
+            "allFieldValid", "$allFieldsValid"
         )
     }
 
@@ -167,7 +194,6 @@ class SignUpViewModel(
             }
         }
     }
-
 }
 
 sealed interface SignUpEvent {
@@ -175,9 +201,16 @@ sealed interface SignUpEvent {
     data class SignUpFail(val message: String) : SignUpEvent
 }
 
+sealed interface CheckEmail {
+    data object Exists : CheckEmail
+    data object Empty : CheckEmail
+    data class Error(val message: String) : CheckEmail
+}
+
 class SignUpViewmodelFactory(
     private val signUpWithFirebaseUseCase: SignUpWithFirebaseUseCase,
     private val sessionManager: SessionManager,
+    private val checkEmailDuplicateUseCase: CheckEmailDuplicateUseCase,
 ) :
     ViewModelProvider.Factory {
 
@@ -187,6 +220,7 @@ class SignUpViewmodelFactory(
             return SignUpViewModel(
                 signUpWithFirebaseUseCase = signUpWithFirebaseUseCase,
                 sessionManager = sessionManager,
+                checkEmailDuplicateUseCase = checkEmailDuplicateUseCase,
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

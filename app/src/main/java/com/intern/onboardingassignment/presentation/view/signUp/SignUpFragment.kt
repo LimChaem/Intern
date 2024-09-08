@@ -2,6 +2,8 @@ package com.intern.onboardingassignment.presentation.view.signUp
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -24,11 +26,7 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     private val binding get() = _binding!!
 
     private val viewModel: SignUpViewModel by viewModels {
-        val appContainer = (requireActivity().application as MyApp).appContainer
-        SignUpViewmodelFactory(
-            signUpWithFirebaseUseCase = appContainer.signUpWithFirebaseUseCase,
-            sessionManager = appContainer.sessionManager,
-        )
+        MyApp().appContainer.signUpContainer.signUpFactory
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,16 +84,16 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     }
 
     private fun observeLiveData() {
-        viewModel.nameValidUi.observe(this, Observer { inValid ->
+        viewModel.nameValidUi.observe(viewLifecycleOwner, Observer { inValid ->
             binding.tvNameCheck.isVisible = !inValid
         })
-        viewModel.emailValidUi.observe(this, Observer { inValid ->
+        viewModel.emailValidUi.observe(viewLifecycleOwner, Observer { inValid ->
             binding.tvIdCheck.isVisible = !inValid
         })
-        viewModel.passwordValidUi.observe(this, Observer { inValid ->
+        viewModel.passwordValidUi.observe(viewLifecycleOwner, Observer { inValid ->
             binding.tvPasswordCheck.isVisible = !inValid
         })
-        viewModel.confirmPasswordValidUi.observe(this, Observer { inValid ->
+        viewModel.confirmPasswordValidUi.observe(viewLifecycleOwner, Observer { inValid ->
             binding.tvConfirmPasswordCheck.isVisible = !inValid
         })
 
@@ -131,6 +129,10 @@ class SignUpFragment : Fragment(), View.OnClickListener {
     private fun initView() {
         binding.btnSignUp.setOnClickListener(this)
         binding.tvSignUp.setOnClickListener(this)
+        binding.ivSignHide.setOnClickListener(this)
+
+        binding.ivSignHide.tag = 0
+        binding.ivSignHide.setImageResource(R.drawable.ic_hide)
     }
 
     private fun clearText() {
@@ -152,6 +154,20 @@ class SignUpFragment : Fragment(), View.OnClickListener {
                     frag = LoginFragment(),
                     clearBackStack = true
                 )
+
+                binding.ivSignHide -> {
+                    if (binding.ivSignHide.tag == "0") {
+                        binding.ivSignHide.tag = "1"
+                        binding.etPassword.transformationMethod =
+                            HideReturnsTransformationMethod.getInstance()
+                        binding.ivSignHide.setImageResource(R.drawable.ic_show)
+                    } else {
+                        binding.ivSignHide.tag = "0"
+                        binding.etPassword.transformationMethod =
+                            PasswordTransformationMethod.getInstance()
+                        binding.ivSignHide.setImageResource(R.drawable.ic_hide)
+                    }
+                }
             }
         }
     }

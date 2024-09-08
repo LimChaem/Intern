@@ -7,4 +7,6 @@ data class UserResponse(
     val email: String,
     val uId: String,
     val createdAt: Timestamp,
-)
+){
+    constructor(): this("","","",Timestamp.now())
+}

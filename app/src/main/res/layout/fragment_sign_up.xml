@@ -6,129 +6,175 @@
     android:layout_height="match_parent"
     tools:context=".presentation.view.logIn.LoginFragment">
 
-    <EditText
-        android:id="@+id/et_name"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/et_custom"
-        android:hint="이름을 입력해주세요."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_signUp"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_Name_Check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:text="이름에 특수 문자가 포함 되어있습니다."
-        android:textColor="@color/black"
-        android:textSize="11sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@id/et_name"
-        app:layout_constraintTop_toBottomOf="@id/et_name" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
 
-    <EditText
-        android:id="@+id/et_id"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/et_custom"
-        android:hint="아이디를 입력해 주세요."
-        app:layout_constraintEnd_toEndOf="@id/et_name"
-        app:layout_constraintStart_toStartOf="@id/et_name"
-        app:layout_constraintTop_toBottomOf="@id/et_name" />
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="100dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/et_custom"
+                android:hint="이름을 입력해주세요."
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:maxLength="10"
+                android:nextFocusDown="@id/et_id"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_Id_Check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:text="E-Mail 형식이 올바르지 않습니다."
-        android:textColor="@color/black"
-        android:textSize="11sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@id/et_id"
-        app:layout_constraintTop_toBottomOf="@id/et_id" />
+            <TextView
+                android:id="@+id/tv_Name_Check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="이름에 특수 문자가 포함 되어있습니다."
+                android:textColor="@color/red"
+                android:textSize="11sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@id/et_name"
+                app:layout_constraintTop_toBottomOf="@id/et_name" />
 
+            <EditText
+                android:id="@+id/et_id"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/et_custom"
+                android:hint="아이디를 입력해 주세요."
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:nextFocusDown="@id/et_password"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                app:layout_constraintEnd_toEndOf="@id/et_name"
+                app:layout_constraintStart_toStartOf="@id/et_name"
+                app:layout_constraintTop_toBottomOf="@id/et_name" />
 
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/et_custom"
-        android:hint="비밀번호를 입력해 주세요."
-        app:layout_constraintEnd_toEndOf="@id/et_id"
-        app:layout_constraintStart_toStartOf="@id/et_id"
-        app:layout_constraintTop_toBottomOf="@id/et_id" />
-
-    <TextView
-        android:id="@+id/tv_Password_Check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:text="비밀번호는 알파벳, 숫자, 특수문자를 포함해야 합니다."
-        android:textColor="@color/black"
-        android:textSize="11sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@id/et_password"
-        app:layout_constraintTop_toBottomOf="@id/et_password" />
+            <TextView
+                android:id="@+id/tv_Id_Check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="E-Mail 형식이 올바르지 않습니다."
+                android:textColor="@color/red"
+                android:textSize="11sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@id/et_id"
+                app:layout_constraintTop_toBottomOf="@id/et_id" />
 
 
+            <EditText
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/et_custom"
+                android:hint="비밀번호를 입력해 주세요."
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:nextFocusDown="@id/et_password_check"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                app:layout_constraintEnd_toEndOf="@id/et_id"
+                app:layout_constraintHorizontal_bias="0.578"
+                app:layout_constraintStart_toStartOf="@id/et_id"
+                app:layout_constraintTop_toBottomOf="@id/et_id" />
 
-    <EditText
-        android:id="@+id/et_password_check"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/et_custom"
-        android:hint="비밀번호를 입력해 주세요."
-        app:layout_constraintEnd_toEndOf="@id/et_password"
-        app:layout_constraintStart_toStartOf="@id/et_password"
-        app:layout_constraintTop_toBottomOf="@id/et_password" />
+            <ImageView
+                android:id="@+id/iv_Sign_Hide"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="15dp"
+                android:backgroundTint="@color/black"
+                android:tag="0"
+                app:layout_constraintBottom_toBottomOf="@+id/et_password"
+                app:layout_constraintEnd_toEndOf="@+id/et_password"
+                app:layout_constraintTop_toTopOf="@+id/et_password" />
 
-    <TextView
-        android:id="@+id/tv_Confirm_Password_Check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:text="비밀번호가 일치 하지 않습니다."
-        android:textColor="@color/black"
-        android:textSize="11sp"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@id/et_password_check"
-        app:layout_constraintTop_toBottomOf="@id/et_password_check" />
-as
 
-    a
+            <TextView
+                android:id="@+id/tv_Password_Check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="비밀번호는 알파벳, 숫자, 특수문자를 포함해야 합니다."
+                android:textColor="@color/red"
+                android:textSize="11sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@id/et_password"
+                app:layout_constraintTop_toBottomOf="@id/et_password" />
+
+
+            <EditText
+                android:id="@+id/et_password_check"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/et_custom"
+                android:hint="비밀번호를 입력해 주세요."
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:nextFocusDown="@id/btn_signUp"
+                android:paddingStart="15dp"
+                android:paddingEnd="0dp"
+                app:layout_constraintEnd_toEndOf="@id/et_password"
+                app:layout_constraintStart_toStartOf="@id/et_password"
+                app:layout_constraintTop_toBottomOf="@id/et_password" />
+
+            <TextView
+                android:id="@+id/tv_Confirm_Password_Check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="5dp"
+                android:text="비밀번호가 일치 하지 않습니다."
+                android:textColor="@color/red"
+                android:textSize="11sp"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@id/et_password_check"
+                app:layout_constraintTop_toBottomOf="@id/et_password_check" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_signUp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="60dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/btn_radius_lilac"
-        android:text="회원가입"
         android:clickable="true"
-        app:layout_constraintEnd_toEndOf="@id/et_password_check"
-        app:layout_constraintStart_toStartOf="@id/et_password_check"
-        app:layout_constraintTop_toBottomOf="@id/et_password_check" />
+        android:text="회원가입"
+        app:layout_constraintBottom_toTopOf="@id/tv_guide_signUp"
+        app:layout_constraintEnd_toEndOf="@id/tv_guide_signUp"
+        app:layout_constraintStart_toStartOf="@id/tv_guide_signUp" />
 
     <TextView
         android:id="@+id/tv_guide_signUp"
@@ -153,6 +199,4 @@ as
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tv_guide_signUp" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

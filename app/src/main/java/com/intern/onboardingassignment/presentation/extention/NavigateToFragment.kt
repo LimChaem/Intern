@@ -3,6 +3,7 @@ package com.intern.onboardingassignment.presentation.extention
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.replace
 import com.intern.onboardingassignment.R
 
@@ -14,12 +15,19 @@ fun FragmentActivity.addToFragment(frag: Fragment) {
 
 fun FragmentActivity.replaceToFragment(frag: Fragment, clearBackStack: Boolean = false, addToBackStack: Boolean = false) {
 
-    val fragmentManager = supportFragmentManager.beginTransaction().replace(R.id.frame, frag)
+    val fragmentManager = supportFragmentManager
+    val fragmentTag = frag::class.java.simpleName
+    val fragmentTransaction=fragmentManager.beginTransaction().replace(R.id.frame, frag, frag::class.java.simpleName)
 
-    if(addToBackStack){
-        fragmentManager.addToBackStack(null).commit()
+    val isFragmentInBackStack = supportFragmentManager.findFragmentByTag(fragmentTag) != null
+
+    if(clearBackStack){
+        supportFragmentManager.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+    }
+
+    if(addToBackStack && !isFragmentInBackStack){
+        fragmentTransaction.addToBackStack(frag::class.java.simpleName).commit()
     } else {
-
-        fragmentManager.commit()
+        fragmentTransaction.commit()
     }
 }

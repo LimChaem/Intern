@@ -18,10 +18,7 @@ import kotlinx.coroutines.launch
 class LoginFragment : Fragment(), View.OnClickListener {
 
     private val logInViewModel: LoginViewModel by viewModels {
-        val appContainer = (requireActivity().application as MyApp).appContainer
-        LoginViewModelFactory(
-            sessionManager = appContainer.sessionManager,
-        )
+        MyApp().appContainer.logInContainer.loginViewModelFactory
     }
 
     private var _binding: FragmentLoginBinding? = null
@@ -59,7 +56,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
                     is LogInEvent.LogInSuccess -> {
                         requireActivity().replaceToFragment(
                             MainPageFragment(),
-                            clearBackStack = true
+                            clearBackStack = true,
+                            addToBackStack = false
                         )
                     }
                 }
@@ -86,7 +84,8 @@ class LoginFragment : Fragment(), View.OnClickListener {
                 binding.tvSignUp -> {
                     requireActivity().replaceToFragment(
                         frag = SignUpFragment(),
-                        clearBackStack = true
+                        clearBackStack = true,
+                        addToBackStack = true,
                     )
                 }
             }

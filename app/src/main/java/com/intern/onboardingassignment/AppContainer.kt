@@ -6,9 +6,13 @@ import com.intern.onboardingassignment.data.dataSource.FirebaseDataSourceImpl
 import com.intern.onboardingassignment.data.repository.AuthRepositoryImpl
 import com.intern.onboardingassignment.data.session.SessionManagerImpl
 import com.intern.onboardingassignment.domain.session.SessionManager
+import com.intern.onboardingassignment.domain.usecase.AccountDeletionUseCase
+import com.intern.onboardingassignment.domain.usecase.CheckEmailDuplicateUseCase
+import com.intern.onboardingassignment.domain.usecase.GetCurrentUserDataUseCase
 import com.intern.onboardingassignment.domain.usecase.SignUpWithFirebaseUseCase
 import com.intern.onboardingassignment.presentation.MainViewModelFactory
 import com.intern.onboardingassignment.presentation.view.logIn.LoginViewModelFactory
+import com.intern.onboardingassignment.presentation.view.main.MainPageViewModelFactory
 import com.intern.onboardingassignment.presentation.view.signUp.SignUpViewmodelFactory
 
 class AppContainer {
@@ -37,11 +41,24 @@ class AppContainer {
         SignUpWithFirebaseUseCase(authRepository = authRepository)
     }
 
+    val checkEmailDuplicateUseCase by lazy {
+        CheckEmailDuplicateUseCase(authRepository = authRepository)
+    }
+
+    val getCurrentUserDataUseCase by lazy {
+        GetCurrentUserDataUseCase(authRepository = authRepository)
+    }
+
+     val accountDeletionUseCase by lazy{
+         AccountDeletionUseCase(authRepository = authRepository)
+     }
+
     // container 초기화
     val signUpContainer: SignUpContainer by lazy {
         SignUpContainer(
             signUpWithFirebaseUseCase = signUpWithFirebaseUseCase,
             sessionManager = sessionManager,
+            checkEmailDuplicateUseCase = checkEmailDuplicateUseCase,
         )
     }
 
@@ -50,7 +67,18 @@ class AppContainer {
     }
 
     val mainContainer: MainContainer by lazy {
-        MainContainer(sessionManager = sessionManager)
+        MainContainer(
+            sessionManager = sessionManager,
+            getCurrentUserDataUseCase = getCurrentUserDataUseCase,
+        )
+    }
+
+    val mainPageContainer: MainPageContainer by lazy {
+        MainPageContainer(
+            sessionManager = sessionManager,
+            getCurrentUserDataUseCase = getCurrentUserDataUseCase,
+            accountDeletionUseCase = accountDeletionUseCase
+        )
     }
 
 
@@ -58,10 +86,12 @@ class AppContainer {
     class SignUpContainer(
         val signUpWithFirebaseUseCase: SignUpWithFirebaseUseCase,
         val sessionManager: SessionManager,
+        val checkEmailDuplicateUseCase: CheckEmailDuplicateUseCase,
     ) {
         val signUpFactory = SignUpViewmodelFactory(
             signUpWithFirebaseUseCase = signUpWithFirebaseUseCase,
             sessionManager = sessionManager,
+            checkEmailDuplicateUseCase = checkEmailDuplicateUseCase,
         )
     }
 
@@ -75,9 +105,23 @@ class AppContainer {
 
     class MainContainer(
         val sessionManager: SessionManager,
+        val getCurrentUserDataUseCase: GetCurrentUserDataUseCase,
     ) {
         val mainPageViewModelFactory = MainViewModelFactory(
             sessionManager = sessionManager,
+            getCurrentUserDataUseCase = getCurrentUserDataUseCase,
+        )
+    }
+
+    class MainPageContainer(
+        val sessionManager: SessionManager,
+        val getCurrentUserDataUseCase: GetCurrentUserDataUseCase,
+        val accountDeletionUseCase: AccountDeletionUseCase,
+    ){
+        val mainPageViewModelFactory = MainPageViewModelFactory(
+            sessionManager = sessionManager,
+            getCurrentUserDataUseCase = getCurrentUserDataUseCase,
+            accountDeletionUseCase = accountDeletionUseCase,
         )
     }
 

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1098474503671",
+    "project_id": "onboarding-1deb4",
+    "storage_bucket": "onboarding-1deb4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098474503671:android:f867e6b4db5b3e2e4182f2",
+        "android_client_info": {
+          "package_name": "com.intern.OnboardingAssignment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALJvSwh5K7CO8m9c-ZnsPpFhpIGqx78oM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098474503671:android:afe315208025ade64182f2",
+        "android_client_info": {
+          "package_name": "com.intern.onboardingassignment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALJvSwh5K7CO8m9c-ZnsPpFhpIGqx78oM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
