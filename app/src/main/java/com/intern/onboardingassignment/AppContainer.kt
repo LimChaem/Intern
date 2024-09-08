@@ -58,7 +58,6 @@ class AppContainer {
         SignUpContainer(
             signUpWithFirebaseUseCase = signUpWithFirebaseUseCase,
             sessionManager = sessionManager,
-            checkEmailDuplicateUseCase = checkEmailDuplicateUseCase,
         )
     }
 
@@ -86,12 +85,10 @@ class AppContainer {
     class SignUpContainer(
         val signUpWithFirebaseUseCase: SignUpWithFirebaseUseCase,
         val sessionManager: SessionManager,
-        val checkEmailDuplicateUseCase: CheckEmailDuplicateUseCase,
     ) {
         val signUpFactory = SignUpViewmodelFactory(
             signUpWithFirebaseUseCase = signUpWithFirebaseUseCase,
             sessionManager = sessionManager,
-            checkEmailDuplicateUseCase = checkEmailDuplicateUseCase,
         )
     }
 

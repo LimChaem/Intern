@@ -22,23 +22,16 @@ import java.util.regex.Pattern
 class SignUpViewModel(
     private val signUpWithFirebaseUseCase: SignUpWithFirebaseUseCase,
     private val sessionManager: SessionManager,
-    private val checkEmailDuplicateUseCase: CheckEmailDuplicateUseCase,
 ) : ViewModel() {
 
     private val _channel = Channel<SignUpEvent> { }
     val channel = _channel.receiveAsFlow()
-
-    private val _checkEmailDuplicate = Channel<CheckEmail> { }
-    val checkEmailDuplicate = _checkEmailDuplicate.receiveAsFlow()
 
     private val _emailValid = MutableLiveData<Boolean>()
     val emailValid = _emailValid
 
     private val _emailValidUi = MutableLiveData<Boolean>()
     val emailValidUi = _emailValidUi
-
-    private val _emailDuplicate = MutableLiveData<Boolean>()
-    val emailDuplicate = _emailDuplicate
 
     private val _nameValid = MutableLiveData<Boolean>()
     val nameValid = _nameValid
@@ -179,16 +172,9 @@ sealed interface SignUpEvent {
     data class SignUpFail(val message: String) : SignUpEvent
 }
 
-sealed interface CheckEmail {
-    data object Exists : CheckEmail
-    data object Empty : CheckEmail
-    data class Error(val message: String) : CheckEmail
-}
-
 class SignUpViewmodelFactory(
     private val signUpWithFirebaseUseCase: SignUpWithFirebaseUseCase,
     private val sessionManager: SessionManager,
-    private val checkEmailDuplicateUseCase: CheckEmailDuplicateUseCase,
 ) :
     ViewModelProvider.Factory {
 
@@ -198,7 +184,6 @@ class SignUpViewmodelFactory(
             return SignUpViewModel(
                 signUpWithFirebaseUseCase = signUpWithFirebaseUseCase,
                 sessionManager = sessionManager,
-                checkEmailDuplicateUseCase = checkEmailDuplicateUseCase,
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
